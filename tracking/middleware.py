@@ -69,6 +69,7 @@ class VisitorTrackingMiddleware(object):
         visitor.save()
 
         if TRACK_PAGEVIEWS:
+            query_string = request.META.get('QUERY_STRING')
             # Match against `path_info` to not include the SCRIPT_NAME..
             path = request.path_info.lstrip('/')
             for url in TRACK_IGNORE_URLS:
@@ -76,7 +77,7 @@ class VisitorTrackingMiddleware(object):
                     break
             else:
                 pageview = Pageview(visitor=visitor, url=request.path,
-                    view_time=now, method=request.method)
+                    query_string=query_string, view_time=now, method=request.method)
                 pageview.save()
 
         return response
