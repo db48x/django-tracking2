@@ -53,6 +53,34 @@
     <p>No visitor stats available</p>
 {% endif %}
 
+<h2>Most Recent Sessions</h2>
+{% if most_recent_visitors %}
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Time on Site</th>
+            <th>Pages Visited</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for visitor in most_recent_visitors %}
+        <tr>
+            <th>{% firstof visitor.user.get_full_name visitor.user "Anonymous" %}</th>
+            <td>{{ visitor.start_time }}</td>
+            <td>{{ visitor.end_time }}</td>
+            <td>{{ visitor.time_elapsed_on_site|default_if_none:"n/a" }}</td>
+            <td>{{ visitor.page_count|floatformat|default:"n/a" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>No sessions have been recorded</p>
+{% endif %}
+
 <h2>Registered Users</h2>
 {% if user_stats %}
 <table>

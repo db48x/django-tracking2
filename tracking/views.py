@@ -57,6 +57,7 @@ def dashboard(request):
         errors.append('<code>{0}</code> is not a valid end date'.format(end_str))
 
     user_stats = list(Visitor.objects.user_stats(start_date, end_date))
+    most_recent = list(Visitor.objects.most_recent(10))
 
     track_start_time = Visitor.objects.order_by('start_time')[0].start_time
     # If the start_date is later than when tracking began, no reason
@@ -72,6 +73,7 @@ def dashboard(request):
         'visitor_stats': Visitor.objects.stats(start_date, end_date),
         'user_stats': user_stats,
         'tracked_dates': Visitor.objects.tracked_dates(),
+        'most_recent_visitors': most_recent
     }
 
     if TRACK_PAGEVIEWS:

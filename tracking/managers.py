@@ -35,6 +35,20 @@ class VisitorManager(CacheManager):
             return [dates['start_min'].date(), dates['start_max'].date()]
         return []
 
+    def most_recent(self, count=10, registered_only=False):
+        """Returns the most recent visitors"""
+        visitors = self.get_query_set()
+
+        if not TRACK_ANONYMOUS_USERS or registered_only:
+            visitors = visitors.filter(user__isnull=False)
+
+        visitors = visitors.order_by('-start_time')[:count]
+
+        if TRACK_PAGEVIEWS:
+            visitors = visitors.annotate(page_count=Count('pageviews'))
+
+        return visitors
+
     def stats(self, start_date=None, end_date=None, registered_only=False):
         """Returns a dictionary of visits including:
 
