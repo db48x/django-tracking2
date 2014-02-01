@@ -1,0 +1,23 @@
+<h2>Session Pageviews</h2>
+<p>Session: {{visitor.session_key}}<br />
+User: {% firstof visitor.user.get_full_name visitor.user "Anonymous" %}</p>
+{% if pages %}
+<table>
+    <thead>
+        <tr>
+            <th>URL</th>
+            <th>Visit Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for page in pages %}
+        <tr>
+            <td>{{ page.full_url }}</td>
+            <td>{{ page.view_time }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>Data for pageviews is not available</p>
+{% endif %}

@@ -72,7 +72,7 @@
             <td>{{ visitor.start_time }}</td>
             <td>{{ visitor.end_time }}</td>
             <td>{{ visitor.time_elapsed_on_site|default_if_none:"n/a" }}</td>
-            <td>{{ visitor.page_count|floatformat|default:"n/a" }}</td>
+            <td><a href="/tracking/session/{{ visitor.session_key }}">{{ visitor.page_count|floatformat|default:"n/a" }}</a></td>
         </tr>
         {% endfor %}
     </tbody>

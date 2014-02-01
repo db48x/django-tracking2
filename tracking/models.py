@@ -80,6 +80,15 @@ class Pageview(models.Model):
 
     objects = PageviewManager()
 
+    @property
+    def full_url(self):
+        full_url = self.url
+
+        if self.query_string:
+            full_url += '?' + self.query_string
+
+        return full_url
+
     class Meta(object):
         ordering = ('-view_time',)
 

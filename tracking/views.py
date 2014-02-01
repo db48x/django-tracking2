@@ -90,6 +90,24 @@ def dashboard(request):
     return render(request, 'tracking/dashboard.html', context)
 
 
+@permission_required('tracking.view_visitor')
+def session(request, session_id):
+    errors = []
+    pages = None
+
+    visitor = Visitor.objects.get(session_key=session_id)
+
+    if TRACK_PAGEVIEWS:
+        pages = Pageview.objects.filter(visitor_id=session_id).order_by('view_time')
+
+    context = {
+        'errors': errors,
+        'visitor': visitor,
+        'pages': pages,
+    }
+
+    return render(request, 'tracking/session.html', context)
+
 def stats(*args, **kwargs):
     warn('The stats view has been renamed to dashboard and the /dashboard/ URL has be moved to the root /', DeprecationWarning)
     return dashboard(*args, **kwargs)
