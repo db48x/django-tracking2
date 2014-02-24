@@ -14,7 +14,10 @@ log = logging.getLogger(__file__)
 
 def parse_partial_date(date_str, upper=False):
     if not date_str:
-        return
+        if not upper:
+            return date.today() - timedelta(days=7)
+        else:
+            return date.today()
 
     day = None
     toks = [int(x) for x in date_str.split('-')]
