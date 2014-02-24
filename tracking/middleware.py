@@ -77,7 +77,8 @@ class VisitorTrackingMiddleware(object):
                     break
             else:
                 pageview = Pageview(visitor=visitor, url=request.path,
-                    query_string=query_string, view_time=now, method=request.method)
+                                    query_string=query_string, view_time=now,
+                                    method=request.method, status=response.status_code)
                 pageview.save()
 
         return response

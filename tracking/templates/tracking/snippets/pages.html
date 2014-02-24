@@ -5,15 +5,19 @@ User: {% firstof visitor.user.get_full_name visitor.user "Anonymous" %}</p>
 <table>
     <thead>
         <tr>
-            <th>URL</th>
             <th>Visit Time</th>
+            <th>Method</th>
+            <th>URL</th>
+            <th>Response Code</th>
         </tr>
     </thead>
     <tbody>
         {% for page in pages %}
         <tr>
-            <td>{{ page.full_url }}</td>
             <td>{{ page.view_time }}</td>
+            <td>{{ page.method }}</td>
+            <td>{{ page.full_url }}</td>
+            <td>{{ page.status }}</td>
         </tr>
         {% endfor %}
     </tbody>

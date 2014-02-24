@@ -26,8 +26,7 @@ admin.site.register(Visitor, VisitorAdmin)
 class PageviewAdmin(admin.ModelAdmin):
     date_hierarchy = 'view_time'
 
-    list_display = ('url', 'view_time')
-
+    list_display = ('view_time', 'method', 'url', 'status')
 
 if TRACK_PAGEVIEWS:
     admin.site.register(Pageview, PageviewAdmin)
