@@ -5,6 +5,7 @@ from django.db.models import Count, Avg, Min, Max
 from tracking.settings import TRACK_PAGEVIEWS, TRACK_ANONYMOUS_USERS
 from tracking.cache import CacheManager
 from .compat import User
+import pytz
 
 def adjusted_date_range(start=None, end=None):
     today = date.today()
@@ -12,6 +13,9 @@ def adjusted_date_range(start=None, end=None):
         end = min(end, today) + timedelta(days=1)
     else:
         end = today
+    if start:
+        start = pytz.utc.localize(datetime.combine(start, datetime.min.time()))
+    end = pytz.utc.localize(datetime.combine(end, datetime.min.time()))
     return start, end
 
 class VisitorManager(CacheManager):
