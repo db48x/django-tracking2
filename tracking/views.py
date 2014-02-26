@@ -42,7 +42,8 @@ def parse_partial_date(date_str, upper=False):
 def dashboard(request):
     "Counts, aggregations and more!"
     errors = []
-    start_date, end_date = None, None
+    start_date = date.today() - timedelta(days=7)
+    end_date = date.today()
 
     try:
         start_str = request.GET.get('start', None)
